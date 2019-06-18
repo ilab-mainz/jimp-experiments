@@ -1,0 +1,74 @@
+<html>
+    <header>
+        <title>JIMP Experiments</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://unpkg.com/jimp@0.6.4/browser/lib/jimp"></script>
+        <script>
+
+            window.addEventListener("load", () => {
+                // get all inputs
+                const inputs = document.querySelectorAll('input[type="range"]');
+                // add event listeners
+                inputs.forEach( input => 
+                               input.addEventListener('change', processImage)
+                              );  
+                // process the image once
+                processImage();
+            });
+
+
+            // processing pipeline
+            async function processImage() {
+
+                // get params
+                const width = getValue('width');
+                const height = getValue('height');
+                const posterize = getValue('posterize');
+                const rotate = getValue('rotate');
+
+                // load image
+                const img = await Jimp.read('./img/mona-lisa-256x256.jpg');
+
+                // processing pipeline ...
+                img.background( 0xFFFFFFFF );
+                img.rotate(rotate);
+                img.resize(width, height);
+                img.posterize(posterize);
+
+                // show image
+                showImage(img, 'myimage');
+            }
+
+            // helper function to get slider values
+            function getValue(id) {
+                return parseInt(document.getElementById(id).value);
+            }
+
+            // helper function to display the image 
+            function showImage(img, id) {
+                img.getBase64(Jimp.MIME_JPEG,  (err, src) => {   
+                    const img = document.getElementById(id);
+                    img.setAttribute("src", src);
+                });
+            }
+
+        </script>
+
+    </header>
+    <body>
+        <div id="page">
+            <div id="vcenter">
+                <div id="hcenter">
+                    <div id="frame">
+                        <img id="myimage">
+                    </div>
+                    <br>
+                    <input id="width" type="range" min="100" max="400" value="400"/>
+                    <input id="height" type="range" min="100" max="400" value="400"/>
+                    <input id="rotate" type="range" min="0" max="360" value="0"/>
+                    <input id="posterize" type="range" min="3" max="32" value="8"/>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

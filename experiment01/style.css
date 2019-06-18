@@ -1,0 +1,34 @@
+#page {
+    background-color: black;
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#vcenter {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#hcenter {
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    width: 420px;
+    height: 480px;
+}
+
+#frame {
+    width: 400px;
+    height: 400px;
+}
+img {
+    margin: 10px;
+}
+input {
+    margin-left: 15px;
+    width: 185px;
+}
